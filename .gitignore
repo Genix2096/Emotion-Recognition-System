@@ -227,3 +227,5 @@ data/crema-d/
 
 # Trained models
 *.keras
+
+data/raw-dataset/
