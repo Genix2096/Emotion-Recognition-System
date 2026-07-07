@@ -10,3 +10,6 @@ kagglehub>=0.3
 openai-whisper>=20240930
 groq>=0.9
 joblib>=1.3
+
+running backend: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+running frontend: npm run dev
