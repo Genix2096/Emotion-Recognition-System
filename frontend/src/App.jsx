@@ -37,38 +37,32 @@ export default function App() {
   return (
     <div className="app-bg" style={{ minHeight: '100vh', position: 'relative', overflowX: 'hidden' }}>
 
-      {/* ── Ambient background orbs ───────────────────────────────────────── */}
-      <div aria-hidden="true">
-        <div className="amb-orb" style={{
-          width: 500, height: 500,
-          background: 'radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%)',
-          top: -160, left: -140,
-          '--dur': '14s', '--delay': '0s',
-        }} />
-        <div className="amb-orb" style={{
-          width: 380, height: 380,
-          background: 'radial-gradient(circle, rgba(139,92,246,0.14) 0%, transparent 70%)',
-          top: '30%', right: -100,
-          '--dur': '18s', '--delay': '-6s',
-        }} />
-        <div className="amb-orb" style={{
-          width: 300, height: 300,
-          background: 'radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%)',
-          bottom: '10%', left: '20%',
-          '--dur': '22s', '--delay': '-11s',
-        }} />
-      </div>
+      {/* ── Thin top accent bar ───────────────────────────────────────────── */}
+      <div style={{
+        height: 6,
+        background: 'linear-gradient(90deg, #F9E8A2, #B4E1EB, #95BDD7, #78A4CB)',
+        borderBottom: '1px solid #111111',
+      }} />
 
       {/* ── Page content ─────────────────────────────────────────────────── */}
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '42rem', margin: '0 auto', padding: '0 1rem 5rem' }}>
+      <div style={{
+        position: 'relative',
+        zIndex: 1,
+        maxWidth: '46rem',
+        margin: '0 auto',
+        padding: '0 1.25rem 6rem',
+      }}>
 
         {/* Hero */}
         <HeroSection />
 
         {/* Upload card */}
-        <div className="glass" style={{ padding: '1.5rem', marginBottom: '1rem' }}>
-          <div className="section-label" style={{ marginBottom: '1rem' }}>
-            Upload Audio File
+        <div
+          className="glass card-hover"
+          style={{ padding: '1.75rem', marginBottom: '1.25rem' }}
+        >
+          <div className="section-label" style={{ marginBottom: '1.25rem' }}>
+            Audio Source
           </div>
 
           <FileUploader file={file} onFileSelect={handleFileSelect} />
@@ -81,7 +75,7 @@ export default function App() {
           )}
 
           {/* Divider */}
-          <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '1.25rem 0' }} />
+          <hr className="divider" style={{ margin: '1.5rem 0' }} />
 
           <AnalyzeButton
             onClick={handleAnalyze}

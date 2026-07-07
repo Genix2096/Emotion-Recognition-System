@@ -1,48 +1,67 @@
 export default function HeroSection() {
   return (
-    <header className="text-center pt-16 pb-10 px-4 select-none">
+    <header
+      style={{
+        paddingTop: '1rem',
+        paddingBottom: '3rem',
+        paddingInline: '0.5rem',
+      }}
+    >
 
-      {/* ── Main headline ──────────────────────────────────────────────────── */}
+      {/* ── Main headline ───────────────────────────────────────────────── */}
       <h1
         style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: 'clamp(2.6rem, 6.5vw, 4.75rem)',
-          fontWeight: 800,
-          lineHeight: 1.06,
-          letterSpacing: '-0.03em',
-          marginBottom: '1.25rem',
+          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontSize: 'clamp(3rem, 8vw, 5.5rem)',
+          fontWeight: 400,
+          lineHeight: 1.03,
+          letterSpacing: '-0.02em',
+          color: '#111111',
+          marginBottom: '1.35rem',
         }}
       >
-        <span className="text-gradient">Vocal Emotion</span>
-        <br />
-        <span style={{ color: '#fafafa' }}>Classifier</span>
+        Emotion Recognition
+        <em style={{ fontStyle: 'italic', color: '#78A4CB' }}>System</em>
       </h1>
 
-      {/* ── Sub-copy ───────────────────────────────────────────────────────── */}
+      {/* ── Divider line with accent block ──────────────────────────────── */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.35rem' }}>
+        <div style={{ height: 3, flex: 1, background: '#111111', borderRadius: 1 }} />
+        <div style={{
+          width: 28, height: 12,
+          background: '#F9E8A2',
+          border: '1px solid #111111',
+          borderRadius: 2,
+        }} />
+        <div style={{ height: 3, width: 40, background: '#B4E1EB', borderRadius: 1 }} />
+      </div>
+
+      {/* ── Sub-copy ────────────────────────────────────────────────────── */}
       <p
         style={{
-          maxWidth: '29rem',
-          margin: '0 auto 2rem',
+          maxWidth: '32rem',
           fontSize: '0.9375rem',
-          lineHeight: 1.65,
-          color: '#71717a',
+          lineHeight: 1,
+          color: '#334155',
+          
         }}
       >
-        Upload a&nbsp;
+        Upload a{' '}
         <code
           style={{
             fontFamily: 'monospace',
-            fontSize: '0.825rem',
-            padding: '0.15rem 0.45rem',
-            borderRadius: '0.35rem',
-            background: 'rgba(99,102,241,0.15)',
-            border: '1px solid rgba(99,102,241,0.25)',
-            color: '#a5b4fc',
+            fontSize: '0.82rem',
+            padding: '0.1rem 0.45rem',
+            borderRadius: '3px',
+            background: '#F9E8A2',
+            border: '1px solid #111111',
+            color: '#111111',
+            fontWeight: 700,
           }}
         >
           .wav
         </code>
-        &nbsp;file and our SVM model decodes the hidden emotion from MFCCs,
+        {' '}file and our SVM model decodes the hidden emotion from MFCCs,
         chroma vectors, mel-spectrograms, and spectral contrast.
       </p>
     </header>

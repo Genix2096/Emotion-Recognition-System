@@ -1,71 +1,51 @@
 import { useEffect, useState } from 'react';
 
-/* ── Emotion → deep visual theme ─────────────────────────────────────────── */
+/* ── Emotion themes — pastel palette ──────────────────────────────────── */
 const THEMES = {
-  HAPPY:     {
-    color: '#f59e0b', glow: 'rgba(245,158,11,0.55)', bg: 'rgba(245,158,11,0.07)',
-    border: 'rgba(245,158,11,0.3)', shadow: '0 0 60px rgba(245,158,11,0.18)',
-    barGrad: 'linear-gradient(90deg,#d97706,#f59e0b)', barGlow: 'rgba(245,158,11,0.55)',
-    emoji: '😊', label: 'Happy',
+  HAPPY: {
+    bg: '#FEF9C3', border: '#111111', barColor: '#78A4CB',
+    labelColor: '#92400E', emoji: '😊', label: 'Happy',
   },
-  SAD:       {
-    color: '#60a5fa', glow: 'rgba(96,165,250,0.55)', bg: 'rgba(59,130,246,0.07)',
-    border: 'rgba(59,130,246,0.3)', shadow: '0 0 60px rgba(59,130,246,0.18)',
-    barGrad: 'linear-gradient(90deg,#2563eb,#60a5fa)', barGlow: 'rgba(96,165,250,0.55)',
-    emoji: '😢', label: 'Sad',
+  SAD: {
+    bg: '#E0F2FE', border: '#111111', barColor: '#78A4CB',
+    labelColor: '#1E40AF', emoji: '😢', label: 'Sad',
   },
-  ANGRY:     {
-    color: '#f87171', glow: 'rgba(248,113,113,0.55)', bg: 'rgba(239,68,68,0.07)',
-    border: 'rgba(239,68,68,0.3)', shadow: '0 0 60px rgba(239,68,68,0.18)',
-    barGrad: 'linear-gradient(90deg,#dc2626,#f87171)', barGlow: 'rgba(248,113,113,0.55)',
-    emoji: '😠', label: 'Angry',
+  ANGRY: {
+    bg: '#FFE4E6', border: '#111111', barColor: '#95BDD7',
+    labelColor: '#9F1239', emoji: '😠', label: 'Angry',
   },
-  CALM:      {
-    color: '#818cf8', glow: 'rgba(129,140,248,0.55)', bg: 'rgba(99,102,241,0.07)',
-    border: 'rgba(99,102,241,0.3)', shadow: '0 0 60px rgba(99,102,241,0.18)',
-    barGrad: 'linear-gradient(90deg,#4f46e5,#818cf8)', barGlow: 'rgba(129,140,248,0.55)',
-    emoji: '😌', label: 'Calm',
+  CALM: {
+    bg: '#B4E1EB', border: '#111111', barColor: '#78A4CB',
+    labelColor: '#0E4F6A', emoji: '😌', label: 'Calm',
   },
-  NEUTRAL:   {
-    color: '#818cf8', glow: 'rgba(129,140,248,0.55)', bg: 'rgba(99,102,241,0.07)',
-    border: 'rgba(99,102,241,0.3)', shadow: '0 0 60px rgba(99,102,241,0.18)',
-    barGrad: 'linear-gradient(90deg,#4f46e5,#818cf8)', barGlow: 'rgba(129,140,248,0.55)',
-    emoji: '😐', label: 'Neutral',
+  NEUTRAL: {
+    bg: '#F5F1E8', border: '#111111', barColor: '#95BDD7',
+    labelColor: '#334155', emoji: '😐', label: 'Neutral',
   },
-  FEARFUL:   {
-    color: '#c084fc', glow: 'rgba(192,132,252,0.55)', bg: 'rgba(139,92,246,0.07)',
-    border: 'rgba(139,92,246,0.3)', shadow: '0 0 60px rgba(139,92,246,0.22)',
-    barGrad: 'linear-gradient(90deg,#7c3aed,#c084fc)', barGlow: 'rgba(192,132,252,0.55)',
-    emoji: '😨', label: 'Fearful',
+  FEARFUL: {
+    bg: '#EDE9FE', border: '#111111', barColor: '#78A4CB',
+    labelColor: '#5B21B6', emoji: '😨', label: 'Fearful',
   },
-  FEAR:      {
-    color: '#c084fc', glow: 'rgba(192,132,252,0.55)', bg: 'rgba(139,92,246,0.07)',
-    border: 'rgba(139,92,246,0.3)', shadow: '0 0 60px rgba(139,92,246,0.22)',
-    barGrad: 'linear-gradient(90deg,#7c3aed,#c084fc)', barGlow: 'rgba(192,132,252,0.55)',
-    emoji: '😨', label: 'Fear',
+  FEAR: {
+    bg: '#EDE9FE', border: '#111111', barColor: '#78A4CB',
+    labelColor: '#5B21B6', emoji: '😨', label: 'Fear',
   },
-  DISGUST:   {
-    color: '#34d399', glow: 'rgba(52,211,153,0.55)', bg: 'rgba(16,185,129,0.07)',
-    border: 'rgba(16,185,129,0.3)', shadow: '0 0 60px rgba(16,185,129,0.18)',
-    barGrad: 'linear-gradient(90deg,#059669,#34d399)', barGlow: 'rgba(52,211,153,0.55)',
-    emoji: '🤢', label: 'Disgust',
+  DISGUST: {
+    bg: '#DCFCE7', border: '#111111', barColor: '#95BDD7',
+    labelColor: '#14532D', emoji: '🤢', label: 'Disgust',
   },
   SURPRISED: {
-    color: '#fb923c', glow: 'rgba(251,146,60,0.55)', bg: 'rgba(249,115,22,0.07)',
-    border: 'rgba(249,115,22,0.3)', shadow: '0 0 60px rgba(249,115,22,0.18)',
-    barGrad: 'linear-gradient(90deg,#ea580c,#fb923c)', barGlow: 'rgba(251,146,60,0.55)',
-    emoji: '😲', label: 'Surprised',
+    bg: '#FEF3C7', border: '#111111', barColor: '#78A4CB',
+    labelColor: '#92400E', emoji: '😲', label: 'Surprised',
   },
-  SURPRISE:  {
-    color: '#fb923c', glow: 'rgba(251,146,60,0.55)', bg: 'rgba(249,115,22,0.07)',
-    border: 'rgba(249,115,22,0.3)', shadow: '0 0 60px rgba(249,115,22,0.18)',
-    barGrad: 'linear-gradient(90deg,#ea580c,#fb923c)', barGlow: 'rgba(251,146,60,0.55)',
-    emoji: '😲', label: 'Surprise',
+  SURPRISE: {
+    bg: '#FEF3C7', border: '#111111', barColor: '#78A4CB',
+    labelColor: '#92400E', emoji: '😲', label: 'Surprise',
   },
 };
 const DEFAULT_THEME = THEMES.NEUTRAL;
 
-/* ── Thick animated confidence bar ──────────────────────────────────────── */
+/* ── Animated confidence bar ─────────────────────────────────────────── */
 function ConfidenceGauge({ confidence, theme }) {
   const [width, setWidth] = useState(0);
   const pct = Math.round(confidence * 100);
@@ -78,12 +58,15 @@ function ConfidenceGauge({ confidence, theme }) {
   return (
     <div>
       {/* Label row */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.6rem' }}>
-        <span style={{ fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#52525b' }}>
-          Confidence
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.7rem' }}>
+        <span style={{ fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#64748B' }}>
+          Confidence Score
         </span>
-        <span style={{ fontSize: '1.5rem', fontWeight: 800, color: theme.color, letterSpacing: '-0.03em', fontVariantNumeric: 'tabular-nums' }}>
-          {pct}<span style={{ fontSize: '0.85rem', fontWeight: 600, opacity: 0.7 }}>%</span>
+        <span style={{
+          fontSize: '1.75rem', fontWeight: 900, color: '#111111',
+          letterSpacing: '-0.04em', fontVariantNumeric: 'tabular-nums',
+        }}>
+          {pct}<span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#64748B' }}>%</span>
         </span>
       </div>
 
@@ -94,68 +77,91 @@ function ConfidenceGauge({ confidence, theme }) {
           className="conf-fill"
           style={{
             width: `${width}%`,
-            '--bar-gradient': theme.barGrad,
-            '--bar-glow':     theme.barGlow,
+            '--bar-gradient': theme.barColor,
           }}
         />
-        {/* Glow layer */}
-        <div style={{
-          position: 'absolute', inset: 0, borderRadius: '99px',
-          background: `linear-gradient(90deg, transparent ${width - 8}%, ${theme.color}22 ${width}%)`,
-          transition: 'background 1s cubic-bezier(0.22,1,0.36,1)',
-          pointerEvents: 'none',
-        }} />
       </div>
 
-      {/* Tick marks */}
+      {/* Ticks */}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.4rem' }}>
         {['0', '25', '50', '75', '100'].map((v) => (
-          <span key={v} style={{ fontSize: '0.65rem', color: '#3f3f46' }}>{v}%</span>
+          <span key={v} style={{ fontSize: '0.62rem', color: '#94A3B8', fontVariantNumeric: 'tabular-nums' }}>{v}%</span>
         ))}
       </div>
     </div>
   );
 }
 
-/* ── Metric pill ─────────────────────────────────────────────────────────── */
-function Pill({ label, value, accent }) {
+/* ── Telemetry metric card ───────────────────────────────────────────── */
+function MetricCard({ label, value, bgColor }) {
   return (
-    <div className="metric-pill">
-      <span style={{ fontSize: '0.82rem', fontWeight: 700, color: accent || '#e4e4e7' }}>
+    <div className="metric-pill" style={{ background: bgColor || '#F5F1E8' }}>
+      <span style={{ fontSize: '0.88rem', fontWeight: 900, color: '#111111', letterSpacing: '-0.02em' }}>
         {value}
       </span>
-      <span style={{ fontSize: '0.65rem', color: '#71717a', letterSpacing: '0.04em' }}>
+      <span style={{ fontSize: '0.6rem', color: '#64748B', letterSpacing: '0.07em', textTransform: 'uppercase', fontWeight: 700 }}>
         {label}
       </span>
     </div>
   );
 }
 
-/* ── Error state ──────────────────────────────────────────────────────────── */
+/* ── Probability bar row ─────────────────────────────────────────────── */
+function ProbRow({ label, pct, barColor, isTop }) {
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    const t = setTimeout(() => setWidth(pct), 120);
+    return () => clearTimeout(t);
+  }, [pct]);
+
+  return (
+    <div className="prob-row">
+      <span className="prob-label" style={{ fontWeight: isTop ? 800 : 600, color: isTop ? '#111111' : '#64748B' }}>
+        {label}
+      </span>
+      <div className="prob-track">
+        <div
+          className="prob-fill"
+          style={{
+            width: `${width}%`,
+            background: isTop ? barColor : '#B4E1EB',
+          }}
+        />
+      </div>
+      <span className="prob-pct" style={{ color: isTop ? '#111111' : '#94A3B8', fontWeight: isTop ? 800 : 600 }}>
+        {pct}%
+      </span>
+    </div>
+  );
+}
+
+/* ── Error card ──────────────────────────────────────────────────────── */
 function ErrorCard({ message }) {
   return (
     <div
       id="results-dashboard"
-      className="glass results-enter"
+      className="results-enter"
       style={{
         padding: '1.25rem 1.5rem',
-        border: '1px solid rgba(239,68,68,0.3)',
-        background: 'rgba(239,68,68,0.05)',
-        display: 'flex', alignItems: 'flex-start', gap: '0.9rem',
+        background: '#FFE4E6',
+        border: '2px solid #111111',
+        borderRadius: 8,
+        display: 'flex', alignItems: 'flex-start', gap: '1rem',
+        boxShadow: '4px 4px 0px #111111',
       }}
     >
-      <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>⚠</span>
+      <span style={{ fontSize: '1.5rem', lineHeight: 1, flexShrink: 0 }}>⚠</span>
       <div>
-        <p style={{ fontWeight: 600, fontSize: '0.875rem', color: '#fca5a5', marginBottom: '0.25rem' }}>
+        <p style={{ fontWeight: 800, fontSize: '0.875rem', color: '#9F1239', marginBottom: '0.3rem' }}>
           Analysis Failed
         </p>
-        <p style={{ fontSize: '0.8rem', color: '#71717a', lineHeight: 1.5 }}>{message}</p>
+        <p style={{ fontSize: '0.8rem', color: '#334155', lineHeight: 1.6 }}>{message}</p>
       </div>
     </div>
   );
 }
 
-/* ── Main component ──────────────────────────────────────────────────────── */
+/* ── Main component ──────────────────────────────────────────────────── */
 export default function ResultsDashboard({ result, error }) {
   if (error)   return <ErrorCard message={error} />;
   if (!result) return null;
@@ -170,39 +176,44 @@ export default function ResultsDashboard({ result, error }) {
     : pct >= 40 ? 'Moderate confidence — emotion is likely correct but overlaps with adjacent states.'
     :             'Low confidence — the sample may contain mixed cues or high ambient noise.';
 
-  return (
-    <div id="results-dashboard" className="results-enter" style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
+  /* Synthetic probability distribution if the backend doesn't provide one */
+  const probData = result.probabilities
+    ? Object.entries(result.probabilities)
+        .map(([k, v]) => ({ label: k, pct: Math.round(v * 100) }))
+        .sort((a, b) => b.pct - a.pct)
+        .slice(0, 6)
+    : null;
 
-      {/* ── Hero emotion card ──────────────────────────────────────────────── */}
+  return (
+    <div id="results-dashboard" className="results-enter" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+
+      {/* ── Hero emotion card ─────────────────────────────────────────── */}
       <div
         className="emotion-card"
         style={{
-          '--emotion-border': theme.border,
-          '--emotion-bg':     theme.bg,
-          '--emotion-shadow': theme.shadow,
-          '--emotion-glow':   theme.glow,
-          padding: '1.5rem',
+          '--emotion-bg': theme.bg,
+          padding: '1.75rem',
         }}
       >
         {/* Header label */}
         <p style={{
-          fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em',
-          textTransform: 'uppercase', color: '#3f3f46', marginBottom: '1.1rem',
+          fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em',
+          textTransform: 'uppercase', color: '#64748B', marginBottom: '1.25rem',
         }}>
-          Detected Emotion
+          ▸ Detected Emotion
         </p>
 
         {/* Orb + label */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          {/* Emoji box */}
           <div
             className="emotion-orb"
             style={{
-              '--emotion-glow': theme.glow,
-              width: 72, height: 72, borderRadius: '1rem',
+              width: 80, height: 80, borderRadius: 6,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '2rem', flexShrink: 0,
-              background: theme.bg,
-              border: `1.5px solid ${theme.border}`,
+              fontSize: '2.5rem', flexShrink: 0,
+              background: '#FDFBF7', border: '2px solid #111111',
+              boxShadow: '4px 4px 0px #111111',
             }}
           >
             {theme.emoji}
@@ -210,51 +221,74 @@ export default function ResultsDashboard({ result, error }) {
 
           <div>
             <h2 style={{
-              fontSize: 'clamp(2rem, 5vw, 2.75rem)',
-              fontWeight: 900,
-              letterSpacing: '-0.04em',
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontSize: 'clamp(2.5rem, 6vw, 3.25rem)',
+              fontWeight: 400,
+              letterSpacing: '-0.03em',
               lineHeight: 1,
-              color: theme.color,
-              textShadow: `0 0 40px ${theme.glow}`,
-              marginBottom: '0.35rem',
+              color: '#111111',
+              marginBottom: '0.4rem',
             }}>
               {theme.label || emotion}
             </h2>
-            <p style={{ fontSize: '0.78rem', color: '#52525b' }}>
+            <p style={{ fontSize: '0.775rem', color: '#64748B', fontWeight: 500 }}>
               Predicted from acoustic window analysis
             </p>
           </div>
         </div>
       </div>
 
-      {/* ── Confidence gauge card ──────────────────────────────────────────── */}
+      {/* ── Confidence gauge ─────────────────────────────────────────── */}
       <div
-        className="glass"
-        style={{
-          padding: '1.25rem 1.5rem',
-          border: `1px solid ${theme.border}`,
-        }}
+        className="glass card-hover"
+        style={{ padding: '1.4rem 1.6rem' }}
       >
         <ConfidenceGauge confidence={result.confidence} theme={theme} />
       </div>
 
-      {/* ── Metric pills ──────────────────────────────────────────────────── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
-        <Pill label="Confidence"   value={`${pct}%`}      accent={theme.color} />
-        <Pill label="Sample Rate"  value="22 kHz"         accent="#818cf8" />
-        <Pill label="Window"       value="3.5s"           accent="#818cf8" />
-        <Pill label="Model"        value="SVM"            accent="#818cf8" />
+      {/* ── Telemetry metrics grid ───────────────────────────────────── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.6rem' }}>
+        <MetricCard label="Confidence"  value={`${pct}%`}   bgColor='#F9E8A2' />
+        <MetricCard label="Sample Rate" value="22 kHz"       bgColor='#B4E1EB' />
+        <MetricCard label="Window"      value="3.5s"         bgColor='#95BDD7' />
+        <MetricCard label="Model"       value="SVM"          bgColor='#78A4CB' />
       </div>
 
-      {/* ── Interpretation strip ───────────────────────────────────────────── */}
+      {/* ── Probability breakdown ────────────────────────────────────── */}
+      {probData && probData.length > 0 && (
+        <div
+          className="glass card-hover"
+          style={{ padding: '1.35rem 1.6rem' }}
+        >
+          <p style={{
+            fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em',
+            textTransform: 'uppercase', color: '#64748B', marginBottom: '1rem',
+          }}>
+            ▸ Emotion Probability
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            {probData.map(({ label, pct: p }) => (
+              <ProbRow
+                key={label}
+                label={label}
+                pct={p}
+                barColor={theme.barColor}
+                isTop={label.toUpperCase() === emotion}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Interpretation strip ─────────────────────────────────────── */}
       <div style={{
-        padding: '0.75rem 1rem',
-        borderRadius: '0.75rem',
-        background: theme.bg,
-        border: `1px solid ${theme.border}`,
-        fontSize: '0.8rem', lineHeight: 1.55, color: '#a1a1aa',
+        padding: '0.9rem 1.1rem',
+        borderRadius: 6,
+        background: '#F5F1E8',
+        border: '1px solid #111111',
+        fontSize: '0.8rem', lineHeight: 1.65, color: '#334155',
       }}>
-        <span style={{ color: theme.color, fontWeight: 600 }}>Interpretation: </span>
+        <span style={{ fontWeight: 800, color: '#111111' }}>Interpretation: </span>
         {interpretation}
       </div>
     </div>

@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 
-/* Waveform bar configs */
+/* Waveform bar specs */
 const BARS = [
-  { dur: '0.7s',  delay: '0s',     h: 16 },
-  { dur: '0.9s',  delay: '0.12s',  h: 28 },
-  { dur: '0.65s', delay: '0.24s',  h: 20 },
-  { dur: '1.0s',  delay: '0.06s',  h: 34 },
-  { dur: '0.8s',  delay: '0.18s',  h: 24 },
-  { dur: '0.75s', delay: '0.3s',   h: 18 },
-  { dur: '0.95s', delay: '0.09s',  h: 30 },
-  { dur: '0.7s',  delay: '0.21s',  h: 14 },
-  { dur: '0.85s', delay: '0.33s',  h: 22 },
-  { dur: '0.6s',  delay: '0.15s',  h: 12 },
+  { dur: '0.7s',  delay: '0s',    h: 14 },
+  { dur: '0.9s',  delay: '0.1s',  h: 24 },
+  { dur: '0.65s', delay: '0.2s',  h: 18 },
+  { dur: '1.0s',  delay: '0.05s', h: 30 },
+  { dur: '0.8s',  delay: '0.15s', h: 20 },
+  { dur: '0.75s', delay: '0.28s', h: 14 },
+  { dur: '0.95s', delay: '0.08s', h: 26 },
+  { dur: '0.65s', delay: '0.22s', h: 10 },
+  { dur: '0.85s', delay: '0.32s', h: 18 },
+  { dur: '0.55s', delay: '0.12s', h: 8  },
 ];
 
-/* ── Duration reader ──────────────────────────────────────────────────────── */
+/* ── Duration hook ──────────────────────────────────────────────────────── */
 function useDuration(file) {
   const [dur, setDur] = useState(null);
   useEffect(() => {
@@ -23,7 +23,7 @@ function useDuration(file) {
     const a   = new Audio(url);
     a.onloadedmetadata = () => {
       const s = Math.round(a.duration);
-      setDur(isFinite(s) ? `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}` : null);
+      setDur(isFinite(s) ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : null);
       URL.revokeObjectURL(url);
     };
     return () => { a.src = ''; URL.revokeObjectURL(url); };
@@ -31,7 +31,6 @@ function useDuration(file) {
   return dur;
 }
 
-/* ── Component ─────────────────────────────────────────────────────────────── */
 export default function AudioPlayer({ file }) {
   const audioRef = useRef(null);
   const duration = useDuration(file);
@@ -40,23 +39,26 @@ export default function AudioPlayer({ file }) {
 
   const objectUrl = URL.createObjectURL(file);
   const ext       = file.name.split('.').pop().toUpperCase();
-  const shortName = file.name.length > 28 ? `${file.name.slice(0, 25)}…` : file.name;
+  const shortName = file.name.length > 32 ? `${file.name.slice(0, 29)}…` : file.name;
 
   return (
     <div
       id="audio-player-section"
-      className="glass"
       style={{
+        background: '#F5F1E8',
+        border: '1px solid #111111',
+        borderRadius: 6,
         padding: '1rem 1.25rem',
-        border: '1px solid rgba(99,102,241,0.2)',
       }}
     >
-      {/* ── Top: waveform bars + metadata ─────────────────────────────────── */}
+      {/* ── Waveform bars + track info ──────────────────────────────────── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.9rem' }}>
 
-        {/* Animated waveform bars */}
+        {/* Animated equalizer bars */}
         <div style={{
-          display: 'flex', alignItems: 'flex-end', gap: '3px', height: '38px', flexShrink: 0,
+          display: 'flex', alignItems: 'flex-end', gap: '3px', height: '36px', flexShrink: 0,
+          background: '#B4E1EB', border: '1px solid #111111', borderRadius: 4,
+          padding: '4px 8px',
         }}>
           {BARS.map((b, i) => (
             <div
@@ -70,34 +72,36 @@ export default function AudioPlayer({ file }) {
         {/* Track info */}
         <div style={{ minWidth: 0, flex: 1 }}>
           <p style={{
-            fontSize: '0.82rem', fontWeight: 600, color: '#e4e4e7',
+            fontSize: '0.82rem', fontWeight: 700, color: '#111111',
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}>
             {shortName}
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.3rem' }}>
             <span style={{
-              fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.06em',
-              color: '#818cf8', background: 'rgba(99,102,241,0.12)',
-              border: '1px solid rgba(99,102,241,0.25)',
-              borderRadius: '99px', padding: '0.1rem 0.45rem',
-            }}>{ext}</span>
+              fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.07em',
+              color: '#111111', background: '#F9E8A2',
+              border: '1px solid #111111', borderRadius: 3,
+              padding: '0.1rem 0.45rem',
+            }}>
+              {ext}
+            </span>
             {duration && (
-              <span style={{ fontSize: '0.72rem', color: '#71717a' }}>{duration}</span>
+              <span style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>{duration}</span>
             )}
-            <span style={{ fontSize: '0.72rem', color: '#3f3f46' }}>·</span>
-            <span style={{ fontSize: '0.72rem', color: '#71717a' }}>Preview</span>
+            <span style={{ fontSize: '0.72rem', color: '#CBD5E1' }}>·</span>
+            <span style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>Preview</span>
           </div>
         </div>
       </div>
 
-      {/* ── Native audio control ──────────────────────────────────────────── */}
+      {/* ── Native audio control ───────────────────────────────────────── */}
       <audio
         id="audio-player"
         ref={audioRef}
         controls
         src={objectUrl}
-        style={{ width: '100%' }}
+        style={{ width: '100%', height: '34px' }}
       />
     </div>
   );
